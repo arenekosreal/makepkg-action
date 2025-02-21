@@ -16,12 +16,8 @@ inputs:
   repo:
     description: Custom repository to storage extra depends
     required: false
-  image:
-    description: The compatible container image.
-    required: false
-    default: ghcr.io/arenekosreal/makepkg:nightly
 runs:
   using: docker
-  image: ${{ inputs.image }}
+  image: Dockerfile
   args:
     - ${{ inputs.args }}
