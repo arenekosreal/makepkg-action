@@ -35,3 +35,4 @@ RUN useradd -r -d /build -m builder && \
     chown builder:builder /pkgdest /srcdest && \
     echo 'builder ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/100-builder
 COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
