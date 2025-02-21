@@ -123,7 +123,7 @@ __prepare_build_environment
 (
     pushd "$BUILDDIR"
     __append_extra_env "$INPUT_ENV"
-    declare MAKEPKG="$SUDO /usr/bin/makepkg $1"
+    declare MAKEPKG="$SUDO /usr/bin/makepkg --syncdepends --noconfirm $1"
     __log debug "Invoking $MAKEPKG..."
     if [[ -n "$INPUT_STDOUT" ]]
     then
