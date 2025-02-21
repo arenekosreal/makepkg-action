@@ -11,6 +11,8 @@ RUN mkdir /alarm && \
     sed -i "1 i Server = ${ALARM_URL}/\$arch/\$repo" /alarm/etc/pacman.d/mirrorlist
 FROM --platform=linux/arm64 scratch AS bootstrapper-arm64
 COPY --from=downloader-arm64 /alarm/ /
+# https://github.com/moby/buildkit/issues/1267
+RUN sed -i "s/CheckSpace/#CheckSpace/" /etc/pacman.conf
 RUN pacman-key --init && \
     pacman-key --populate && \
     pacman -Syu --noconfirm
