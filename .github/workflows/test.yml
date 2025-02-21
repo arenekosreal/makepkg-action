@@ -19,7 +19,6 @@ jobs:
         with:
           builddir: tests/build-test
           env: CUSTOM_ENV=custom value
-          image: Dockerfile
       - name: Check env
         if: matrix.env
         run: |
@@ -37,7 +36,6 @@ jobs:
           builddir: tests/build-test
           stdout: tests/build-test/SRCINFO
           args: --printsrcinfo
-          image: Dockerfile
       - name: Check SRCINFO
         run: |
           declare srcinfo=tests/build-test/SRCINFO
