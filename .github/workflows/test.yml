@@ -1,0 +1,45 @@
+name: Test action
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test action
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run action (Build)
+        id: test-build
+        uses: .
+        with:
+          builddir: tests/build-test
+          env: CUSTOM_ENV=custom value
+          image: Dockerfile
+      - name: Check env
+        if: matrix.env
+        run: |
+          while read -r package
+          do
+            mkdir -p rootfs
+            tar -x -f "$package" -C rootfs
+            grep "CUSTOM_ENV=custom value" rootfs/var/env
+            rm -rf rootfs
+          done < <(find pkgdest -maxdepth 1 -mindepth 1 -type f -regex '.+\.pkg\.tar\.[0-9a-zA-Z]+$')
+      - name: Run action (.SRCINFO)
+        id: test-srcinfo
+        uses: .
+        with:
+          builddir: tests/build-test
+          stdout: tests/build-test/SRCINFO
+          args: --printsrcinfo
+          image: Dockerfile
+      - name: Check SRCINFO
+        run: |
+          declare srcinfo=tests/build-test/SRCINFO
+          cat "$srcinfo"
+          test "$(<"$srcinfo")" = "$(<tests//build-test/.SRCINFO)"

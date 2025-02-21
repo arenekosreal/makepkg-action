@@ -1,0 +1,27 @@
+name: Launch makepkg
+description: Launch makepkg in an archlinux-like OS.
+inputs:
+  builddir:
+    description: The directory is relative to github.workspace and contains PKGBUILD.
+    required: true
+  args:
+    description: The arguments to makepkg.
+    required: false
+  env:
+    description: The extra environments splitted in newline.
+    required: false
+  stdout:
+    description: Where to save stdout.
+    required: false
+  repo:
+    description: Custom repository to storage extra depends
+    required: false
+  image:
+    description: The compatible container image.
+    required: false
+    default: ghcr.io/arenekosreal/makepkg:nightly
+runs:
+  using: docker
+  image: ${{ inputs.image }}
+  args:
+    - ${{ inputs.args }}
