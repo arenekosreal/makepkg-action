@@ -57,6 +57,14 @@ Launch `makepkg` in an archlinux-like OS.
 
   Description: Custom repository to storage extra depends.
 
+- updatepkgbuild
+
+  Required: false
+
+  Description: If sync updated PKGBUILD to builddir. Useful when you just bump pkgver.
+
+  Default: false
+
 ## FAQ
 
 - Why I need this even ubuntu has `pacman`?
