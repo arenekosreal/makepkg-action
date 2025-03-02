@@ -117,6 +117,33 @@ function __post_call_makepkg() {
     cp -a --no-preserve=ownership "$SRCDEST/." "$SRCDEST_ROOT"
     find "$PKGDEST" -maxdepth 1 -mindepth 1 -type f -regex '.+\.pkg\.tar\.[0-9a-zA-Z]+$' \
         -exec cp --no-preserve=ownership -t "$PKGDEST_ROOT" {} +
+    if [[ "$INPUT_UPDATEPKGBUILD" == "true" ]]
+    then
+        p=false
+        f=PKGBUILD
+        for arg in "$@"
+        do
+          case "$arg" in
+            -p)
+              p=true
+              ;;
+            -p*)
+              f="${arg//-p/}"
+              break
+              ;;
+            *)
+              if "$p"
+              then
+                p=false
+                f="$arg"
+                break
+              fi
+              ;;
+          esac
+        done
+        __log info "Syncing $f to $INPUT_BUILDDIR..."
+        cp --no-preserve=ownership "$BUILDDIR/$f" "$INPUT_BUILDDIR/$f"
+    fi
 }
 
 __prepare_build_environment
@@ -133,4 +160,4 @@ __prepare_build_environment
     fi
     popd
 )
-__post_call_makepkg
+__post_call_makepkg "$@"

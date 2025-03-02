@@ -25,7 +25,6 @@ jobs:
           builddir: tests/build-test
           env: CUSTOM_ENV=custom value
       - name: Check env
-        if: matrix.env
         run: |
           while read -r package
           do
@@ -46,3 +45,13 @@ jobs:
           declare srcinfo=tests/build-test/SRCINFO
           cat "$srcinfo"
           test "$(<"$srcinfo")" = "$(<tests//build-test/.SRCINFO)"
+      - name: Run action(pkgver)
+        id: test-pkgver
+        uses: ./
+        with:
+          builddir: tests/build-test
+          args: --nobuild
+          updatepkgbuild: true
+      - name: Check pkgver
+        run: |
+          git diff tests/build-test/PKGBUILD

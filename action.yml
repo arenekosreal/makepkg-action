@@ -16,6 +16,10 @@ inputs:
   repo:
     description: Custom repository to storage extra depends
     required: false
+  updatepkgbuild:
+    description: If sync updated PKGBUILD to builddir. Useful when you just bump pkgver.
+    required: false
+    default: false
 runs:
   using: docker
   image: Dockerfile
