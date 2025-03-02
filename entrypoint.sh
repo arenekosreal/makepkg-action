@@ -146,9 +146,9 @@ function __post_call_makepkg() {
     fi
 }
 
-__prepare_build_environment
 (
     pushd "$BUILDDIR"
+    __prepare_build_environment
     __append_extra_env "$INPUT_ENV"
     declare MAKEPKG="$SUDO /usr/bin/makepkg --syncdeps --noconfirm $1"
     __log debug "Invoking $MAKEPKG..."
@@ -158,6 +158,6 @@ __prepare_build_environment
     else
         $MAKEPKG
     fi
+    __post_call_makepkg "$1"
     popd
 )
-__post_call_makepkg "$@"
