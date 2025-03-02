@@ -141,8 +141,8 @@ function __post_call_makepkg() {
               ;;
           esac
         done
-        __log info "Syncing $f to $INPUT_BUILDDIR..."
-        cp --no-preserve=ownership "$BUILDDIR/$f" "$INPUT_BUILDDIR/$f"
+        __log info "Syncing $BUILDDIR$f to $BUILDDIR_ROOT..."
+        cp --no-preserve=ownership "$BUILDDIR/$f" "$BUILDDIR_ROOT/"
     fi
 }
 
