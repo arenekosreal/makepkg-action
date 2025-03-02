@@ -65,6 +65,36 @@ Launch `makepkg` in an archlinux-like OS.
 
   Default: false
 
+## Example
+
+When just build a PKGBUILD:
+```yaml
+  - name: Build
+    uses: arenekosreal/makepkg-action@main
+    with:
+      builddir: path/to/pkgbuild
+```
+
+When generate .SRCINFO:
+```yaml
+  - name: Gen srcinfo
+    uses: arenekosreal/makepkg-action@main
+    with:
+      builddir: path/to/pkgbuild
+      args: --printsrcinfo
+      stdout: path/to/pkgbuild/.SRCINFO
+```
+
+When bump a devel package's pkgver:
+```yaml
+  - name: Bump pkgver
+    uses: arenekosreal/makepkg-action@main
+    with:
+      builddir: path/to/pkgbuild
+      args: --nobuild
+      updatepkgbuild: true
+```
+
 ## FAQ
 
 - Why I need this even ubuntu has `pacman`?
