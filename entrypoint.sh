@@ -119,9 +119,10 @@ function __post_call_makepkg() {
         -exec cp --no-preserve=ownership -t "$PKGDEST_ROOT" {} +
     if [[ "$INPUT_UPDATEPKGBUILD" == "true" ]]
     then
-        p=false
-        f=PKGBUILD
-        for arg in "$@"
+        local p=false f=PKGBUILD arg
+        local -a args
+        read -r -a args <<< "$1"
+        for arg in "${args[@]}"
         do
           case "$arg" in
             -p)
