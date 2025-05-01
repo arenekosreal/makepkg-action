@@ -108,7 +108,7 @@ function __prepare_build_environment() {
         __log info "Adding repository at $GITHUB_WORKSPACE/$INPUT_REPO..."
         echo -e "[$INPUT_REPO]\nServer = file://$GITHUB_WORKSPACE/$INPUT_REPO\nSigLevel = Optional TrustAll" | tee -a /etc/pacman.conf
     fi
-    pacman -Sy
+    pacman -Syu --noconfirm
 }
 
 # __post_call_makepkg
