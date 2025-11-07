@@ -32,6 +32,7 @@ CMD ["/usr/bin/bash"]
 # Followed template from https://gitlab.archlinux.org/archlinux/archlinux-docker/-/blob/master/Dockerfile.template
 
 FROM base-devel-${TARGETARCH} AS base-devel
+LABEL com.github.actions.required=true
 RUN useradd -r -d /build -m builder && \
     mkdir -p /pkgdest /srcdest && \
     chown builder:builder /pkgdest /srcdest && \
