@@ -24,7 +24,8 @@ RUN mkdir -p /alarm/var/lib/pacman && \
     pacman -r /alarm -Sy base base-devel archlinuxarm-keyring --noconfirm && \
     pacman -r /alarm -D --asdeps base-devel && \
     systemd-tmpfiles --create --root=/alarm && \
-    rm -rf /alarm/etc/pacman.d/gnupg /alarm/var/cache/pacman
+    rm -rf /alarm/etc/pacman.d/gnupg /alarm/var/cache/pacman && \
+    sed -i "s/#DisableSandbox/DisableSandbox/" /alarm/etc/pacman.conf
 # https://gitlab.archlinux.org/archlinux/archlinux-docker/blob/master/README.md#principles
 # https://wiki.archlinux.org/title/Pacman/Package_signing#Resetting_all_the_keys
 FROM --platform=linux/arm64 scratch AS base-devel-arm64
