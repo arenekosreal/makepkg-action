@@ -13,6 +13,8 @@ FROM --platform=linux/arm64 scratch AS bootstrapper-arm64
 COPY --from=downloader-arm64 /alarm/ /
 # https://github.com/moby/buildkit/issues/1267
 RUN sed -i "s/CheckSpace/#CheckSpace/" /etc/pacman.conf
+# error: restricting filesystem access failed because the Landlock ruleset could not be applied: Operation not permitted
+RUN sed -i "s/#DisableSandbox/DisableSandbox/" /etc/pacman.conf
 RUN pacman-key --init && \
     pacman-key --populate && \
     pacman -Syu --noconfirm
