@@ -54,9 +54,7 @@ jobs:
         env:
           CUSTOM_ENV: custom value
         with:
-          startdir: tests/build-test
           preserve-env: CUSTOM_ENV
-          stdout: stdout.txt
       - name: Check pkgver
         run: '! diff -u /startdir/PKGBUILD.bak startdir/PKGBUILD'
       - name: Check env
@@ -71,7 +69,7 @@ jobs:
       - name: Check stdout
         run: |
           ls -l
-          test -f stdout.txt
+          test -f makepkg.txt
       - name: Check pkgdest
         run: |
           test -d pkgdest
