@@ -64,13 +64,6 @@ Launch `makepkg` in an archlinux-like OS.
     required: false
 ```
 
-## Outputs
-
-```yaml
-  stdout-path:
-    description: The path to file in ${{ github.workspace }} contains stdout of makepkg
-```
-
 ## Examples
 
 ```yaml
