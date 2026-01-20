@@ -49,8 +49,10 @@ fi
 export BUILDDIR=/build PKGDEST=/pkgdest SRCDEST=/srcdest LOGDEST=/logdest
 
 mkdir -p "$(dirname "$GITHUB_WORKSPACE/$INPUT_STDOUT")"
-"${SUDO[@]}" "--chdir=$STARTDIR" "--preserve-env=$preserve_env" \
+cd "$STARTDIR"
+"${SUDO[@]}" "--preserve-env=$preserve_env" \
     "${MAKEPKG[@]}" "$@" | tee "$GITHUB_WORKSPACE/$INPUT_STDOUT"
+cd -
 
 rm -rf "${GITHUB_WORKSPACE:?}/$INPUT_PKGDEST" \
        "${GITHUB_WORKSPACE:?}/$INPUT_LOGDEST" \
