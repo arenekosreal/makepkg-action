@@ -62,7 +62,9 @@ mkdir -p "$GITHUB_WORKSPACE/$INPUT_PKGDEST" \
          "$GITHUB_WORKSPACE/$INPUT_LOGDEST" \
          "$GITHUB_WORKSPACE/$INPUT_SRCDEST" \
          "$GITHUB_WORKSPACE/$INPUT_STARTDIR"
-"${CP[@]}" $PKGDEST/*.pkg.tar.* "$GITHUB_WORKSPACE/$INPUT_PKGDEST"
-"${CP[@]}" $LOGDEST/*.log "$GITHUB_WORKSPACE/$INPUT_LOGDEST"
+find $PKGDEST -mindepth 1 -maxdepth 1 -type f -name "*.pkg.tar.*" \
+    -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_PKGDEST" {} +
+find $LOGDEST -mindepth 1 -maxdepth 1 -type f -name "*.log" \
+    -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_LOGDEST" {} +
 "${CP[@]}" $SRCDEST/* "$GITHUB_WORKSPACE/$INPUT_SRCDEST"
 "${CP[@]}" $STARTDIR/* "$GITHUB_WORKSPACE/$INPUT_STARTDIR"
