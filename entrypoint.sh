@@ -36,9 +36,9 @@ fi
 
 if [[ -d "$GITHUB_WORKSPACE/$INPUT_SRCDEST" ]]
 then
-    "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_SRCDEST/"* /srcdest
+    "${SUDO[@]}" "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_SRCDEST/"* /srcdest
 fi
-"${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_STARTDIR/"* /startdir
+"${SUDO[@]}" "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_STARTDIR/"* /startdir
 
 declare preserve_env="BUILDDIR,PKGDEST,SRCDEST,LOGDEST,SOURCE_DATE_EPOCH,BUILDTOOL,BUILDTOOLVER"
 if [[ -n "$INPUT_PRESERVE_ENV" ]]
