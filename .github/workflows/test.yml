@@ -56,7 +56,7 @@ jobs:
         with:
           preserve-env: CUSTOM_ENV
       - name: Check pkgver
-        run: '! diff -u /startdir/PKGBUILD.bak startdir/PKGBUILD'
+        run: '! diff -u startdir/PKGBUILD.bak startdir/PKGBUILD'
       - name: Check env
         run: |
           while read -r package
