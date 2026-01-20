@@ -25,74 +25,69 @@ Launch `makepkg` in an archlinux-like OS.
   You can install `pacman-package-manager` and `libarchive-tools` on Ubuntu 24.04 and later, then you can use `repo-add` like what you do on archlinux.
   On those elder runners, you have to build and install pacman yourself.
 
+> [!WARNING]
+> Singnatures of packages are not checked. Please ensure you are using those extra dependencies from trusted source.
+
 ## Inputs
 
-- builddir
-
-  Required: true
-
-  Description: The directory which is relative to github.workspace and contains PKGBUILD.
-
-- args
-
-  Required: false
-
-  Description: The arguments to makepkg.
-
-- env:
-
-  Required: false
-
-  Description: The extra enironments splitted in newline.
-
-- stdout:
-
-  Required: false
-
-  Description: Where to save stdout
-
-- repo:
-
-  Required: false
-
-  Description: Custom repository to storage extra depends.
-
-- updatepkgbuild
-
-  Required: false
-
-  Description: If sync updated PKGBUILD to builddir. Useful when you just bump pkgver.
-
-  Default: false
-
-## Example
-
-When just build a PKGBUILD:
 ```yaml
-  - name: Build
-    uses: arenekosreal/makepkg-action@main
-    with:
-      builddir: path/to/pkgbuild
+  startdir:
+    description: Where is the directory contains PKGBUILD
+    required: false
+    default: startdir
+  pkgdest:
+    description: Where to storage built packages
+    required: false
+    default: pkgdest
+  srcdest:
+    description: Where to storage downloaded sources
+    required: false
+    default: srcdest
+  logdest:
+    description: Where to storage build logs
+    required: false
+    default: logdest
+  args:
+    description: The arguments to makepkg.
+    required: false
+    default: --log
+  repo:
+    description: Where to storage extra dependencies
+    required: false
+    default: repo
+  repo-name:
+    description: The name of repository
+    required: false
+    default: repo
+  preserve-env:
+    description: Comma-seperated environment variable list to be passed to makepkg.
+    required: false
 ```
 
-When generate .SRCINFO:
+## Outputs
+
 ```yaml
-  - name: Gen srcinfo
-    uses: arenekosreal/makepkg-action@main
-    with:
-      builddir: path/to/pkgbuild
-      args: --printsrcinfo
-      stdout: path/to/pkgbuild/.SRCINFO
+  stdout-path:
+    description: The path to file in ${{ github.workspace }} contains stdout of makepkg
 ```
 
-When bump a devel package's pkgver:
+## Examples
+
 ```yaml
-  - name: Bump pkgver
-    uses: arenekosreal/makepkg-action@main
-    with:
-      builddir: path/to/pkgbuild
-      args: --nobuild
-      updatepkgbuild: true
+# Just build the PKGBUILD in ${{ github.workspace }}/startdir
+- uses: arenekosreal/makepkg-action@v0.4.0
+
+# Build the PKGBUILD in directory specified
+- uses: arenekosreal/makepkg-action@v0.4.0
+  with:
+    startdir: example # build the PKGBUILD in ${{ github.workspace }}/example
+    
+# Generate .SRCINFO
+- uses: arenekosreal/makepkg-action@v0.4.0
+  with:
+    startdir: example
+    args: --printsrcinfo
+    stdout: example/.SRCINFO
 ```
 
 ## FAQ
@@ -103,7 +98,7 @@ When bump a devel package's pkgver:
 
 - Any extra tips?
 
-  If you want to cache `srcdest`, Run `sudo chown -R $(id -u):$(id -g) srcdest` before caching it.
+  If you want to cache generated directory like `srcdest`, etc, you need to run `sudo chown -R $(id -u):$(id -g) srcdest` before caching it.
   Or you will find that your files of that directory's owner may become root, and there may have issue when recovering cache.
 
   See also:

@@ -37,8 +37,8 @@ CMD ["/usr/bin/bash"]
 FROM base-devel-${TARGETARCH} AS base-devel
 LABEL com.github.actions.required=true
 RUN useradd -r -d /build -m builder && \
-    mkdir -p /pkgdest /srcdest && \
-    chown builder:builder /pkgdest /srcdest && \
+    mkdir -p /pkgdest /srcdest /logdest /startdir && \
+    chown builder:builder /pkgdest /srcdest /logdest /startdir && \
     echo 'builder ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/100-builder
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]

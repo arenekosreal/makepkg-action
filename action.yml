@@ -1,27 +1,46 @@
 name: Launch makepkg
-description: Launch makepkg in an archlinux-like OS.
+description: Launch makepkg in an archlinux-like OS container.
 inputs:
-  builddir:
-    description: The directory is relative to github.workspace and contains PKGBUILD.
-    required: true
+  startdir:
+    description: Where is the directory contains PKGBUILD
+    required: false
+    default: startdir
+  pkgdest:
+    description: Where to storage built packages
+    required: false
+    default: pkgdest
+  srcdest:
+    description: Where to storage downloaded sources
+    required: false
+    default: srcdest
+  logdest:
+    description: Where to storage build logs
+    required: false
+    default: logdest
   args:
     description: The arguments to makepkg.
     required: false
-  env:
-    description: The extra environments splitted in newline.
+    default: --log
+  repo:
+    description: Where to storage extra dependencies
+    required: false
+    default: repo
+  repo-name:
+    description: The name of repository
+    required: false
+    default: repo
+  preserve-env:
+    description: Comma-seperated environment variable list to be passed to makepkg.
     required: false
   stdout:
-    description: Where to save stdout.
+    description: Where to save makepkg's stdout
     required: false
-  repo:
-    description: Custom repository to storage extra depends
-    required: false
-  updatepkgbuild:
-    description: If sync updated PKGBUILD to builddir. Useful when you just bump pkgver.
-    required: false
-    default: false
+    default: makepkg.txt
 runs:
   using: docker
   image: Dockerfile
   args:
     - ${{ inputs.args }}
+  env:
+    INPUT_REPO_NAME: ${{ inputs.repo-name }}
+    INPUT_PRESERVE_ENV: ${{ inputs.preserve-env }}

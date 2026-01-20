@@ -21,9 +21,13 @@ jobs:
       - name: Run action (Build)
         id: test-build
         uses: ./
+        env:
+          CUSTOM_ENV: custom value
         with:
-          builddir: tests/build-test
-          env: CUSTOM_ENV=custom value
+          startdir: tests/buildtest
+          preserve-env: CUSTOM_ENV
+      - name: Check pkgver
+        run: '! git diff --exit-code tests/build-test/PKGBUILD'
       - name: Check env
         run: |
           while read -r package
@@ -37,21 +41,8 @@ jobs:
         id: test-srcinfo
         uses: ./
         with:
-          builddir: tests/build-test
+          startdir: tests/build-test
           stdout: tests/build-test/SRCINFO
           args: --printsrcinfo
       - name: Check SRCINFO
-        run: |
-          declare srcinfo=tests/build-test/SRCINFO
-          cat "$srcinfo"
-          test "$(<"$srcinfo")" = "$(<tests//build-test/.SRCINFO)"
-      - name: Run action(pkgver)
-        id: test-pkgver
-        uses: ./
-        with:
-          builddir: tests/build-test
-          args: --nobuild
-          updatepkgbuild: true
-      - name: Check pkgver
-        run: |
-          git diff tests/build-test/PKGBUILD
+        run: '! diff -u tests/build-test/SRCINFO tests/build-test/.SRCINFO'
