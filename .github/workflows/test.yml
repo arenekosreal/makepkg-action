@@ -48,7 +48,7 @@ jobs:
               env | install -Dm644 /dev/stdin "$pkgdir/var/env"
           }        
           EOF
-          cp startdir/PKGBUILD startdir PKGBUILD.bak
+          cp startdir/PKGBUILD startdir/PKGBUILD.bak
       - name: Run action (Build)
         uses: ./
         env:
