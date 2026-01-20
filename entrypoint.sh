@@ -40,7 +40,7 @@ then
 fi
 "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_STARTDIR/"* /startdir
 
-declare preserve_env="BUILDDIR,PKGDEST,SRCDEST,LOGDEST"
+declare preserve_env="BUILDDIR,PKGDEST,SRCDEST,LOGDEST,SOURCE_DATE_EPOCH,BUILDTOOL,BUILDTOOLVER"
 if [[ -n "$INPUT_PRESERVE_ENV" ]]
 then
     preserve_env+=",$INPUT_PRESERVE_ENV"
