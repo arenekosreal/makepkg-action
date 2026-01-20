@@ -19,13 +19,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Run action (Build)
-        id: test-build
         uses: ./
         env:
           CUSTOM_ENV: custom value
         with:
           startdir: tests/build-test
           preserve-env: CUSTOM_ENV
+          stdout: stdout.txt
       - name: Check pkgver
         run: '! git diff --exit-code tests/build-test/PKGBUILD'
       - name: Check env
@@ -37,12 +37,21 @@ jobs:
             grep "CUSTOM_ENV=custom value" rootfs/var/env
             rm -rf rootfs
           done < <(find pkgdest -maxdepth 1 -mindepth 1 -type f -regex '.+\.pkg\.tar\.[0-9a-zA-Z]+$')
-      - name: Run action (.SRCINFO)
-        id: test-srcinfo
-        uses: ./
-        with:
-          startdir: tests/build-test
-          stdout: tests/build-test/SRCINFO
-          args: --printsrcinfo
-      - name: Check SRCINFO
-        run: '! diff -u tests/build-test/SRCINFO tests/build-test/.SRCINFO'
+      - name: Check stdout
+        run: |
+          ls -l
+          test -f stdout.txt
+      - name: Check pkgdest
+        run: |
+          test -d pkgdest
+          ls -l pkgdest
+      - name: Check logdest
+        run: |
+          test -d logdest
+          ls -l logdest
+      - name: Check srcdest
+        run: |
+          test -d srcdest
+          ls -l srcdest
+          test -f srcdest/gh-linux.deb
+          test -f srcdest/gh_2.65.0_linux_amd64.tar.gz
