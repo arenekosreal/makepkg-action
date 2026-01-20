@@ -34,7 +34,10 @@ then
         -exec "${SUDO[@]}" "${GPG[@]}" --import {} \;
 fi
 
-"${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_SRCDEST/"* /srcdest
+if [[ -d "$GITHUB_WORKSPACE/$INPUT_SRCDEST" ]]
+then
+    "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_SRCDEST/"* /srcdest
+fi
 "${CP[@]}" "$GITHUB_WORKSPACE/$INPUT_STARTDIR/"* /startdir
 
 declare preserve_env="BUILDDIR,PKGDEST,SRCDEST,LOGDEST"
