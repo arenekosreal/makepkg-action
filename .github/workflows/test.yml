@@ -24,7 +24,7 @@ jobs:
         env:
           CUSTOM_ENV: custom value
         with:
-          startdir: tests/buildtest
+          startdir: tests/build-test
           preserve-env: CUSTOM_ENV
       - name: Check pkgver
         run: '! git diff --exit-code tests/build-test/PKGBUILD'
