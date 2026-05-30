@@ -66,7 +66,7 @@ find $PKGDEST -mindepth 1 -maxdepth 1 -type f -name "*.pkg.tar.*" \
     -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_PKGDEST" {} +
 find $LOGDEST -mindepth 1 -maxdepth 1 -type f -name "*.log" \
     -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_LOGDEST" {} +
-find $SRCDEST -mindepth 1 \
+find $SRCDEST -mindepth 1 -maxdepth 1 \
     -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_SRCDEST" {} +
 find $STARTDIR -mindepth 1 -maxdepth 1 -type f \
     -exec "${CP[@]}" -v -t "$GITHUB_WORKSPACE/$INPUT_STARTDIR" {} +
